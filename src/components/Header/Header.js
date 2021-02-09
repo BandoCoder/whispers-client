@@ -26,7 +26,7 @@ class Header extends Component {
           <Link className="navLink" to={"/posts/" + this.context.user.id}>
             Your Whispers
           </Link>{" "}
-          <Link className="navLink" to="/likes/:userId">
+          <Link className="navLink" to={"/likes/" + this.context.user.id}>
             Likes
           </Link>
         </nav>

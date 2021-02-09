@@ -21,7 +21,7 @@ class LoginForm extends Component {
     this.setState({ error: null });
 
     AuthApiService.postLogin({
-      username: username.value,
+      user_name: username.value,
       password: password.value,
     })
       .then((res) => {
@@ -66,6 +66,9 @@ class LoginForm extends Component {
             required
           />
         </div>
+        <button className="loginBtn" type="submit">
+          Login
+        </button>
       </form>
     );
   }

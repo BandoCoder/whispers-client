@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import PublicOnlyRoute from "../PublicOnlyRoute/PublicOnlyRoute";
 import Header from "../Header/Header";
 import Landing from "../Landing/Landing";
+import LoginRoute from "../../routes/LoginRoute/LoginRoute";
+import SignupRoute from "../../routes/SignupRoute/SignupRoute";
 import NotFoundRoute from "../../routes/NotFoundRoute/NotFoundRoute";
 import "./App.css";
 
@@ -23,6 +26,8 @@ export default class App extends Component {
           {hasError && <p>Something went wrong</p>}
           <Switch>
             <Route exact path={"/"} component={Landing} />
+            <PublicOnlyRoute exact path={"/login"} component={LoginRoute} />
+            <PublicOnlyRoute exact path={"/signup"} component={SignupRoute} />
             <Route component={NotFoundRoute} />
           </Switch>
         </main>

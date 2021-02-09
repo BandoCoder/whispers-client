@@ -40,7 +40,7 @@ class Header extends Component {
         <Link className="navLink" to="/login">
           Login
         </Link>{" "}
-        <Link className="navLink" to="/register">
+        <Link className="navLink" to="/signup">
           Sign up
         </Link>
       </nav>

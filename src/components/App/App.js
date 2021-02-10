@@ -6,6 +6,8 @@ import Header from "../Header/Header";
 import Landing from "../Landing/Landing";
 import LoginRoute from "../../routes/LoginRoute/LoginRoute";
 import SignupRoute from "../../routes/SignupRoute/SignupRoute";
+import Posts from "../Posts/Posts";
+import UserPosts from "../../components/UserPosts/UserPosts";
 import NotFoundRoute from "../../routes/NotFoundRoute/NotFoundRoute";
 import "./App.css";
 
@@ -26,8 +28,10 @@ export default class App extends Component {
           {hasError && <p>Something went wrong</p>}
           <Switch>
             <Route exact path={"/"} component={Landing} />
+            <Route exact path={"/posts"} component={Posts} />
             <PublicOnlyRoute exact path={"/login"} component={LoginRoute} />
             <PublicOnlyRoute exact path={"/signup"} component={SignupRoute} />
+            <PrivateRoute exact path={"/posts/:userId"} component={UserPosts} />
             <Route component={NotFoundRoute} />
           </Switch>
         </main>

@@ -51,7 +51,7 @@ class Header extends Component {
     return (
       <header>
         <h1>
-          <Link className="headLink" to="/">
+          <Link className="headLink" to="/posts">
             Whispers
           </Link>
         </h1>

@@ -6,16 +6,35 @@ import "./Posts.css";
 export default class Posts extends Component {
   state = {
     posts: [],
+    likedPosts: [],
     posting: false,
     error: null,
   };
 
   componentDidMount() {
+    const jwt = TokenService.getAuthToken();
+    if (jwt) {
+      let base64Url = jwt.split(".")[1];
+      let decodedValue = JSON.parse(window.atob(base64Url));
+
+      ContentApiService.getUserLikes(decodedValue.user_id)
+        .then((posts) =>
+          this.setState({
+            likedPosts: posts.map((post) => {
+              return {
+                id: post.id,
+              };
+            }),
+          })
+        )
+        .then(() => console.log(this.state.likedPosts));
+    }
     ContentApiService.getPosts()
       .then((posts) =>
         this.setState({
           posts: posts.map((post) => {
             return {
+              id: post.id,
               title: post.title,
               content: post.content,
               dateCreated: post.date_created,
@@ -40,6 +59,37 @@ export default class Posts extends Component {
     this.setState({
       posting: false,
     });
+  };
+
+  handlePostSubmit = (e) => {
+    e.preventDefault();
+    const jwt = TokenService.getAuthToken();
+    if (jwt) {
+      let base64Url = jwt.split(".")[1];
+      let decodedValue = JSON.parse(window.atob(base64Url));
+      const newPost = {
+        title: e.target["title"].value,
+        content: e.target["content"].value,
+        user_id: decodedValue.user_id,
+      };
+      ContentApiService.postWhisper(newPost, decodedValue.user_id)
+        .then(() =>
+          ContentApiService.getPosts().then((posts) =>
+            this.setState({
+              posting: false,
+              posts: posts.map((post) => {
+                return {
+                  id: post.id,
+                  title: post.title,
+                  content: post.content,
+                  dateCreated: post.date_created,
+                };
+              }),
+            })
+          )
+        )
+        .catch((res) => this.setState({ error: res.eror }));
+    }
   };
 
   renderPostList = () => {
@@ -71,7 +121,7 @@ export default class Posts extends Component {
           </button>
         )}
         {this.state.posting ? (
-          <form>
+          <form onSubmit={this.handlePostSubmit}>
             <label htmlFor="title">Title:</label>
             <input type="text" name="title" />
             <label htmlFor="content">Whisper:</label>

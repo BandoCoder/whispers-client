@@ -29,6 +29,19 @@ const ContentApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
   },
+  postWhisper(newPost, userId) {
+    console.log(JSON.stringify(newPost));
+    return fetch(`${config.API_ENDPOINT}/posts/${userId}`, {
+      method: "POST",
+      headers: {
+        authorization: `bearer ${TokenService.getAuthToken()}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newPost),
+    }).then((res) => {
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json();
+    });
+  },
 };
 
 export default ContentApiService;

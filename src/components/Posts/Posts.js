@@ -113,9 +113,18 @@ export default class Posts extends Component {
     if (jwt) {
       let base64Url = jwt.split(".")[1];
       let decodedValue = JSON.parse(window.atob(base64Url));
+      const selectedImage = this.state.unsplash.find(
+        (img) => img.id === e.target["photoThumb"].value
+      );
+      console.log(selectedImage);
       const newPost = {
         title: e.target["title"].value,
         content: e.target["content"].value,
+        img_url: selectedImage.urls.small,
+        img_photographer: selectedImage.img_photographer,
+        portfolio_url: selectedImage.portfolio_url,
+        img_dwn_link: selectedImage.img_dwn_link,
+        img_alt: selectedImage.alt_description,
         user_id: decodedValue.user_id,
       };
       ContentApiService.postWhisper(newPost, decodedValue.user_id)

@@ -24,6 +24,11 @@ export default class Posts extends Component {
             return {
               title: post.title,
               content: post.content,
+              img_url: post.img_url,
+              img_photographer: post.img_photographer,
+              portfolio_url: post.portfolio_url,
+              img_dwn_link: post.img_dwn_link,
+              img_alt: post.img_alt,
               dateCreated: post.date_created,
             };
           }),
@@ -38,11 +43,17 @@ export default class Posts extends Component {
     return (
       <>
         {posts.map((post, idx) => (
-          <div className="postItem" key={idx}>
+          <div
+            style={{
+              backgroundImage: `url(${post.img_url})`,
+              backgroundRepeat: "no-repeat",
+            }}
+            className="postItem"
+            key={idx}
+          >
             <h4>{post.title}</h4>
             <p>{post.content}</p>
             <span>{post.dateCreated}</span>
-            <hr />
           </div>
         ))}
       </>

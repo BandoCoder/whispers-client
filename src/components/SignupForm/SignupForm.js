@@ -10,20 +10,18 @@ class SignupForm extends Component {
 
   state = { error: null };
 
-  firstInput = React.createRef();
-
   handleSubmit = (ev) => {
     ev.preventDefault();
-    const { name, username, password } = ev.target;
+    const { username, email, password } = ev.target;
     AuthApiService.postUser({
-      name: name.value,
-      username: username.value,
+      user_name: username.value,
+      email: email.value,
       password: password.value,
     })
       .then((user) => {
-        name.value = "";
         username.value = "";
         password.value = "";
+        email.value = "";
         this.props.onRegistrationSuccess();
       })
       .catch((res) => {
@@ -31,26 +29,11 @@ class SignupForm extends Component {
       });
   };
 
-  componentDidMount() {
-    this.firstInput.current.focus();
-  }
-
   render() {
     const { error } = this.state;
     return (
       <form className="signupForm" onSubmit={this.handleSubmit}>
         <div role="alert">{error && <p>{error}</p>}</div>
-        <div className="enterName">
-          <input
-            className="regField"
-            ref={this.firstInput}
-            id="registration-name-input"
-            name="name"
-            placeholder="Enter Name"
-            aria-label="name"
-            required
-          />
-        </div>
         <div className="enterUsername">
           <input
             className="regField"
@@ -58,6 +41,16 @@ class SignupForm extends Component {
             name="username"
             placeholder="Enter username"
             aria-label="username"
+            required
+          />
+        </div>
+        <div className="enterEmail">
+          <input
+            className="regField"
+            id="registration-email-input"
+            name="email"
+            placeholder="Enter Email"
+            aria-label="email"
             required
           />
         </div>

@@ -26,6 +26,10 @@ export default class Posts extends Component {
     return result;
   };
 
+  countLikes = (postId) => {
+    ContentApiService.countLikes(postId).then((count) => console.log(count));
+  };
+
   componentDidMount() {
     const jwt = TokenService.getAuthToken();
     if (jwt) {
@@ -45,23 +49,35 @@ export default class Posts extends Component {
         .then(() =>
           ContentApiService.getPosts()
             .then((posts) =>
-              this.setState({
-                posts: posts.map((post) => {
-                  return {
-                    id: post.id,
-                    title: post.title,
-                    content: post.content,
-                    img_url: post.img_url,
-                    img_photographer: post.img_photographer,
-                    portfolio_url: post.portfolio_url,
-                    img_dwn_link: post.img_dwn_link,
-                    img_alt: post.img_alt,
-                    dateCreated: post.date_created,
-                    likedByUser: this.checkUserLike(post.id),
-                  };
-                }),
-              })
+              this.setState(
+                {
+                  posts: posts.map((post) => {
+                    return {
+                      id: post.id,
+                      title: post.title,
+                      content: post.content,
+                      img_url: post.img_url,
+                      img_photographer: post.img_photographer,
+                      portfolio_url: post.portfolio_url,
+                      img_dwn_link: post.img_dwn_link,
+                      img_alt: post.img_alt,
+                      dateCreated: post.date_created,
+                      likedByUser: this.checkUserLike(post.id),
+                      likeCount: null,
+                    };
+                  }),
+                },
+                () => {
+                  this.state.posts.map((post) =>
+                    ContentApiService.countLikes(post.id).then((res) =>
+                      console.log(res)
+                    )
+                  );
+                }
+              )
             )
+            .then(() => console.log(this.state.posts))
+
             .catch((res) => {
               this.setState({ error: res.error });
             })
@@ -83,10 +99,19 @@ export default class Posts extends Component {
                 img_alt: post.img_alt,
                 dateCreated: post.date_created,
                 likedByUser: this.checkUserLike(post.id),
+                likeCount: null,
               };
             }),
           })
         )
+        .then(() =>
+          this.state.posts.map((post) =>
+            ContentApiService.countLikes(post.id).then(
+              (res) => (post.likeCount = res)
+            )
+          )
+        )
+        .then(() => console.log(this.state.posts))
         .catch((res) => {
           this.setState({ error: res.error });
         });
@@ -233,7 +258,6 @@ export default class Posts extends Component {
             ) : (
               <button disabled>Like</button>
             )}
-            <button>Report</button>
             <hr />
           </div>
         ))}

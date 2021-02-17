@@ -15,7 +15,6 @@ class Header extends Component {
     return (
       <div>
         <nav>
-          <span className="userSpan">{this.context.user.name}</span>
           <Link
             className="navLink"
             onClick={this.handleLogoutClick}
@@ -60,7 +59,6 @@ class Header extends Component {
             ? this.renderLoggedIn()
             : this.renderLoggedOut()}
         </div>
-        <hr />
       </header>
     );
   }

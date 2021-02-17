@@ -55,14 +55,9 @@ const ContentApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json();
     });
   },
-  countLikes(post_id) {
-    return fetch(`${config.API_ENDPOINT}/posts/countlikes/${post_id}`, {
-      headers: {
-        "content-type": "application/json",
-      },
-    }).then((res) => {
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json();
-    });
+
+  downloadLinkFetch(downloadLink) {
+    return fetch(``);
   },
 };
 

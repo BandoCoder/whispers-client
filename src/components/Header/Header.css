@@ -1,0 +1,28 @@
+header {
+  margin: auto;
+  background-image: url("./Secret.jpg");
+  background-size: 100%;
+  padding: 0px 10px 10px 10px;
+}
+
+.headLink {
+  text-decoration: none;
+  font-family: "Beth Ellen", cursive;
+  color: antiquewhite;
+}
+
+.headLink:hover {
+  color: rgb(136, 124, 109);
+}
+
+.navLink {
+  margin: 0px 10px 0px 10px;
+  text-decoration: none;
+  font-family: "Pathway Gothic One", sans-serif;
+  color: antiquewhite;
+  font-size: 18px;
+}
+
+.navLink:hover {
+  color: rgb(136, 124, 109);
+}

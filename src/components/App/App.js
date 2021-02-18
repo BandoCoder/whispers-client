@@ -25,7 +25,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <Header />
-        <main>
+        <main className="backDiv">
           {hasError && <p>Something went wrong</p>}
           <Switch>
             <Route exact path={"/"} component={Landing} />

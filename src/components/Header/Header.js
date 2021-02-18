@@ -49,15 +49,17 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <h1>
-          <Link className="headLink" to="/posts">
-            Whispers
-          </Link>
-        </h1>
-        <div className="navBar">
-          {TokenService.hasAuthToken()
-            ? this.renderLoggedIn()
-            : this.renderLoggedOut()}
+        <div className="boxDiv headDiv">
+          <h1>
+            <Link className="headLink" to="/posts">
+              Whispers
+            </Link>
+          </h1>
+          <div className="navBar">
+            {TokenService.hasAuthToken()
+              ? this.renderLoggedIn()
+              : this.renderLoggedOut()}
+          </div>
         </div>
       </header>
     );

@@ -1,3 +1,117 @@
+.postList {
+  margin: auto;
+  max-width: 400px;
+  background-color: black;
+}
+
+.postForm {
+  position: sticky;
+  top: 140px;
+  background-image: url("./kidsecret.jpg");
+  background-size: 200%;
+  background-position: center;
+  margin: auto;
+  max-width: 400px;
+  height: 410px;
+  overflow: auto;
+}
+
 .postItem {
-  color: aliceblue;
+  height: 250px;
+  padding: 15px;
+  margin: 15px 0px;
+}
+
+.postInfo {
+  padding: 10px 15px 10px 15px;
+  background-color: rgba(0, 0, 0, 0.89);
+}
+
+.photoSearch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+
+.darkDiv {
+  background-color: rgba(0, 0, 0, 0.808);
+  min-height: 410px;
+}
+
+.postDiv {
+  background-color: black;
+}
+
+.textInput {
+  width: 180px;
+  margin: 10px auto;
+}
+
+.btn {
+  margin: 5px auto;
+  width: 70px;
+}
+
+.label {
+  font-size: 15px;
+  margin: 5px auto;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  margin: auto;
+  resize: none;
+  height: 70px;
+  width: 300px;
+}
+
+.photoChoice {
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.photoChoice .photoThumb input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+img {
+  margin: 3px;
+  cursor: pointer;
+  object-fit: cover;
+  width: 110px;
+  height: 100px;
+}
+
+input:checked + img {
+  outline: 2px solid green;
+}
+
+.buttonDiv {
+  width: 150px;
+  position: sticky;
+  top: 105px;
+  margin: 15px auto;
+}
+
+.buttonDiv .whisperButton {
+  width: 150px;
+}
+
+.infoSpan {
+  font-size: 10px;
+  text-align: center;
+}
+
+.postFoot {
+  display: flex;
+  justify-content: space-between;
 }

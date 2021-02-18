@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import ContentApiService from "../../services/content-api-service";
 import TokenService from "../../services/token-service";
 import UnsplashApiService from "../../services/unsplash-api-service";
@@ -91,15 +92,23 @@ export default class Posts extends Component {
 
   handlePostClick = (e) => {
     e.preventDefault();
-    this.setState({
-      posting: true,
-    });
+    if (this.state.posting) {
+      this.handleCancelCLick(e);
+      this.setState({ posting: false });
+    } else {
+      this.setState({
+        posting: true,
+      });
+    }
   };
 
   handleCancelCLick = (e) => {
     e.preventDefault();
+    document.getElementById("photoSearch").reset();
+    document.getElementById("post").reset();
     this.setState({
       posting: false,
+      unsplash: [],
     });
   };
 
@@ -145,6 +154,11 @@ export default class Posts extends Component {
             })
           )
         )
+        .then(() => {
+          document.getElementById("photoSearch").reset();
+          document.getElementById("post").reset();
+          this.setState({ posting: false, unsplash: [] });
+        })
         .catch((res) => this.setState({ error: res.error }));
     }
   };
@@ -194,14 +208,14 @@ export default class Posts extends Component {
     const photos = this.state.unsplash;
 
     return (
-      <>
+      <div className="photoChoice">
         {photos.map((photo, idx) => (
           <label className="photoThumb" key={idx}>
             <input type="radio" id={idx} name="photoThumb" value={photo.id} />
             <img src={photo.urls.thumb} alt={photo.alt_description} />
           </label>
         ))}
-      </>
+      </div>
     );
   };
 
@@ -219,17 +233,28 @@ export default class Posts extends Component {
             className="postItem"
             key={idx}
           >
-            <h4>{post.title}</h4>
-            <p>{post.content}</p>
-            <span>{post.dateCreated}</span>
-            {!post.likedByUser ? (
-              <button onClick={this.handlePostLike} value={post.id}>
-                Like
-              </button>
-            ) : (
-              <button disabled>Like</button>
-            )}
-            <hr />
+            <div className="postInfo">
+              <h4>{post.title}</h4>
+              <p>{post.content}</p>
+              <div className="postFoot">
+                <span>
+                  {moment(post.dateCreated).format("MMM Do YYYY, h:mm:ss a")}
+                </span>
+                {!post.likedByUser ? (
+                  <button
+                    className="likeBtn"
+                    onClick={this.handlePostLike}
+                    value={post.id}
+                  >
+                    Like
+                  </button>
+                ) : (
+                  <button className="likeBtn" disabled>
+                    Like
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </>
@@ -239,39 +264,80 @@ export default class Posts extends Component {
   render() {
     return (
       <section className="postPage">
-        {TokenService.getAuthToken() ? (
-          <button onClick={this.handlePostClick}>Whisper Something</button>
-        ) : (
-          <button onClick={this.handlePostClick} disabled>
-            Whisper Something
-          </button>
-        )}
-        {this.state.posting ? (
-          <>
-            <form className="photoSearch" onSubmit={this.handlePhotoSearch}>
-              <input
-                type="text"
-                name="searchQuery"
-                placeolder="Search for Background"
-              />
-              <button type="submit">Search</button>
-            </form>
-            <form className="postForm" onSubmit={this.handlePostSubmit}>
-              {this.renderPhotoList()}
-              <label htmlFor="title">Title:</label>
-              <input type="text" name="title" />
-              <label htmlFor="content">Whisper:</label>
-              <textarea name="content" />
-              <button type="submit">Submit</button>
-              <button type="reset" onClick={this.handleCancelCLick}>
-                Cancel
+        <div className="landDiv postDiv">
+          <div className="buttonDiv">
+            {TokenService.getAuthToken() ? (
+              <button className="whisperButton" onClick={this.handlePostClick}>
+                Whisper Something
               </button>
-            </form>
-          </>
-        ) : (
-          <></>
-        )}
-        <article className="postList">{this.renderPostList()}</article>
+            ) : (
+              <button
+                className="whisperButton"
+                onClick={this.handlePostClick}
+                disabled
+              >
+                Whisper Something
+              </button>
+            )}
+          </div>
+          {this.state.posting ? (
+            <section className="postForm">
+              <div className="darkDiv">
+                <form
+                  className="photoSearch"
+                  id="photoSearch"
+                  onSubmit={this.handlePhotoSearch}
+                >
+                  <p className="infoSpan">
+                    Use the search bar to look for a good background photo,
+                    enter a title, then enter the secret you would like to
+                    whisper.
+                  </p>
+                  <label className="label" htmlFor="searchQuery">
+                    Search for a background
+                  </label>
+                  <input
+                    type="text"
+                    className="textInput"
+                    name="searchQuery"
+                    placeolder="Search for Background"
+                  />
+                  <button className="btn" type="submit">
+                    Search
+                  </button>
+                </form>
+                <form
+                  className="post"
+                  id="post"
+                  onSubmit={this.handlePostSubmit}
+                >
+                  {this.renderPhotoList()}
+                  <label className="label" htmlFor="title">
+                    Title
+                  </label>
+                  <input type="text" className="textInput" name="title" />
+                  <label className="label" htmlFor="content">
+                    Whisper
+                  </label>
+                  <textarea name="content" />
+                  <button className="btn" type="submit">
+                    Submit
+                  </button>
+                  <button
+                    className="btn"
+                    type="reset"
+                    onClick={this.handleCancelCLick}
+                  >
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            </section>
+          ) : (
+            <></>
+          )}
+          <article className="postList">{this.renderPostList()}</article>
+        </div>
       </section>
     );
   }

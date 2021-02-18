@@ -1,8 +1,10 @@
 header {
+  position: sticky;
+  top: 0;
   margin: auto;
   background-image: url("./Secret.jpg");
   background-size: 100%;
-  padding: 0px 10px 10px 10px;
+  z-index: 100;
 }
 
 .headLink {
@@ -16,7 +18,7 @@ header {
 }
 
 .navLink {
-  margin: 0px 10px 0px 10px;
+  margin: 0px 5px 0px 5px;
   text-decoration: none;
   font-family: "Pathway Gothic One", sans-serif;
   color: antiquewhite;
@@ -25,4 +27,8 @@ header {
 
 .navLink:hover {
   color: rgb(136, 124, 109);
+}
+
+.headDiv {
+  padding-top: 0px;
 }

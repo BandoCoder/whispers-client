@@ -1,6 +1,7 @@
 body {
-  font-family: "Pathway Gothic One", sans-serif;
-  letter-spacing: normal;
+  padding-top: 0px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
@@ -13,5 +14,37 @@ code {
 }
 
 h1 {
-  margin: 0;
+  margin: -9px 0px 0px 0px;
+}
+
+h2 {
+  margin: 0px;
+}
+
+h3 {
+  margin: 0px;
+}
+
+h4 {
+  margin: 0px;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 2px;
+}
+
+p {
+  font-size: 14px;
+}
+
+li {
+  font-size: 13px;
+}
+
+.boxDiv {
+  background-color: rgba(0, 0, 0, 0.555);
+  padding: 13px;
+}
+
+span {
+  font-size: 12px;
 }

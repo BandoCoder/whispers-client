@@ -63,7 +63,7 @@ export default class Posts extends Component {
             })
           )
         )
-        .catch((res) => this.setState({ error: res.error }));
+        .catch((res) => this.setState({ error: res.error.message }));
     } else {
       ContentApiService.getPosts()
         .then((posts) =>
@@ -85,7 +85,7 @@ export default class Posts extends Component {
           })
         )
         .catch((res) => {
-          this.setState({ error: res.error });
+          this.setState({ error: res.message });
         });
     }
   }
@@ -121,7 +121,6 @@ export default class Posts extends Component {
       const selectedImage = this.state.unsplash.find(
         (img) => img.id === e.target["photoThumb"].value
       );
-      console.log(selectedImage);
       const newPost = {
         title: e.target["title"].value,
         content: e.target["content"].value,
@@ -159,7 +158,7 @@ export default class Posts extends Component {
           document.getElementById("post").reset();
           this.setState({ posting: false, unsplash: [] });
         })
-        .catch((res) => this.setState({ error: res.error }));
+        .catch((res) => this.setState({ error: res.error.message }));
     }
   };
 
@@ -173,7 +172,7 @@ export default class Posts extends Component {
 
       ContentApiService.postLike(post_id, decodedValue.user_id)
         .then(() => this.props.history.push(`/likes/${decodedValue.user_id}`))
-        .catch((res) => this.setState({ error: res.error }));
+        .catch((res) => this.setState({ error: res.error.message }));
     }
   };
 
@@ -197,9 +196,8 @@ export default class Posts extends Component {
             }),
           })
         )
-        .then(() => console.log(this.state.unsplash))
         .catch((res) => {
-          this.setState({ error: res.error });
+          this.setState({ error: res.error.message });
         });
     }
   };

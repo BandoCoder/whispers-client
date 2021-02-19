@@ -10,28 +10,38 @@ class LoginForm extends Component {
 
   static contextType = UserContext;
 
-  state = { error: null };
+  state = { error: null, user_name: "", password: "" };
 
   firstInput = React.createRef();
 
+  // Handle State
+  usernameChanged(user_name) {
+    this.setState({ user_name });
+  }
+  passwordChanged(password) {
+    this.setState({ password });
+  }
+
   handleSubmit = (ev) => {
     ev.preventDefault();
-    const { username, password } = ev.target;
+    const { user_name, password } = this.state;
 
     this.setState({ error: null });
 
     AuthApiService.postLogin({
-      user_name: username.value,
-      password: password.value,
+      user_name,
+      password,
     })
       .then((res) => {
-        username.value = "";
-        password.value = "";
+        this.setState({
+          user_name: "",
+          password: "",
+        });
         this.context.processLogin(res.authToken);
         this.props.onLoginSuccess();
       })
       .catch((res) => {
-        this.setState({ error: res.error });
+        this.setState({ error: res.error.message });
       });
   };
 
@@ -50,6 +60,8 @@ class LoginForm extends Component {
             ref={this.firstInput}
             id="login-username-input"
             name="username"
+            value={this.state.user_name}
+            onChange={(e) => this.usernameChanged(e.target.value)}
             placeholder="Username"
             aria-label="username"
             required
@@ -61,6 +73,8 @@ class LoginForm extends Component {
             id="login-password-input"
             name="password"
             type="password"
+            value={this.state.password}
+            onChange={(e) => this.passwordChanged(e.target.value)}
             placeholder="Password"
             aria-label="password"
             required

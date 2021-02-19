@@ -42,7 +42,7 @@ class LoginForm extends Component {
   render() {
     const { error } = this.state;
     return (
-      <form className="LoginForm" onSubmit={this.handleSubmit}>
+      <form className="loginForm" onSubmit={this.handleSubmit}>
         <div role="alert">{error && <p>{error}</p>}</div>
         <div className="loginUsername">
           <input
@@ -66,9 +66,11 @@ class LoginForm extends Component {
             required
           />
         </div>
-        <button className="loginBtn" type="submit">
-          Login
-        </button>
+        <div className="centerLoginBtn">
+          <button className="loginBtn" type="submit">
+            Login
+          </button>
+        </div>
       </form>
     );
   }

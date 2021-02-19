@@ -24,18 +24,30 @@ export default class App extends Component {
     const { hasError } = this.state;
     return (
       <div className="App">
-        <Header />
+        <div className="stickyHeader">
+          <Header />
+        </div>
         <main className="backDiv">
-          {hasError && <p>Something went wrong</p>}
-          <Switch>
-            <Route exact path={"/"} component={Landing} />
-            <Route exact path={"/posts"} component={Posts} />
-            <PublicOnlyRoute exact path={"/login"} component={LoginRoute} />
-            <PublicOnlyRoute exact path={"/signup"} component={SignupRoute} />
-            <PrivateRoute exact path={"/posts/:userId"} component={UserPosts} />
-            <PrivateRoute exact path={"/likes/:userId"} component={UserLikes} />
-            <Route component={NotFoundRoute} />
-          </Switch>
+          <div className="darken">
+            {hasError && <p>Something went wrong</p>}
+            <Switch>
+              <Route exact path={"/"} component={Landing} />
+              <Route exact path={"/posts"} component={Posts} />
+              <PublicOnlyRoute exact path={"/login"} component={LoginRoute} />
+              <PublicOnlyRoute exact path={"/signup"} component={SignupRoute} />
+              <PrivateRoute
+                exact
+                path={"/posts/:userId"}
+                component={UserPosts}
+              />
+              <PrivateRoute
+                exact
+                path={"/likes/:userId"}
+                component={UserLikes}
+              />
+              <Route component={NotFoundRoute} />
+            </Switch>
+          </div>
         </main>
       </div>
     );

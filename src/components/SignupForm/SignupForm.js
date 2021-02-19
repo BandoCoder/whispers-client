@@ -65,14 +65,14 @@ class SignupForm extends Component {
             required
           />
         </div>
+        <button className="submit" type="submit">
+          Submit
+        </button>
         <footer className="footer">
           <Link className="loginLink" to="/login">
             Already have an account?
           </Link>
         </footer>
-        <button className="submit" type="submit">
-          Submit
-        </button>
       </form>
     );
   }

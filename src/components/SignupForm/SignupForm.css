@@ -1,0 +1,19 @@
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  margin: auto;
+}
+
+.loginLink {
+  font-size: 15px;
+}
+
+.regField {
+  margin: 5px 0px;
+}
+
+.submit {
+  width: 80px;
+  margin: auto;
+}

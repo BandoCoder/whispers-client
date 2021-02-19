@@ -238,7 +238,7 @@ export default class Posts extends Component {
               <p>{post.content}</p>
               <div className="postFoot">
                 <span>
-                  {moment(post.dateCreated).format("MMM Do YYYY, h:mm:ss a")}
+                  {moment(post.dateCreated).format("MMM Do YYYY, h:mm a")}
                 </span>
                 {!post.likedByUser ? (
                   <button

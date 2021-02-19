@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ContentApiService from "../../services/content-api-service";
 import TokenService from "../../services/token-service";
+import moment from "moment";
 import "./UserLikes.css";
 
 export default class Likes extends Component {
@@ -51,9 +52,13 @@ export default class Likes extends Component {
             className="postItem"
             key={idx}
           >
-            <h4>{post.title}</h4>
-            <p>{post.content}</p>
-            <span>{post.dateCreated}</span>
+            <div className="postInfo">
+              <h4>{post.title}</h4>
+              <p>{post.content}</p>
+              <span>
+                {moment(post.dateCreated).format("MMM Do YYYY, h:mm a")}
+              </span>
+            </div>
           </div>
         ))}
       </>

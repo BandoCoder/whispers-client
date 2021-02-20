@@ -64,9 +64,10 @@ export default class Posts extends Component {
               </span>
             </div>
             <div className="creditBox">
-              <span className="credits">Photo by: {post.img_photographer}</span>
               <span className="credits">
-                <a href={post.portfolio_url}>{post.portfolio_url}</a>
+                Photo by:{" "}
+                <a href={post.portfolio_url}>{post.img_photographer}</a> on{" "}
+                <a href={"https://unsplash.com/"}>Unsplash</a>
               </span>
             </div>
           </div>
@@ -77,10 +78,7 @@ export default class Posts extends Component {
   render() {
     return (
       <section className="postPage">
-        <h2 className="subHeads">Your Whispers</h2>{" "}
-        <div className="unsplash">
-          <span>Photos powered by Unsplash</span>
-        </div>
+        <h2 className="subHeads">Your Whispers</h2>
         <article className="postList">{this.renderPostList()}</article>
       </section>
     );

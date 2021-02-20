@@ -270,9 +270,10 @@ export default class Posts extends Component {
               </div>
             </div>
             <div className="creditBox">
-              <span className="credits">Photo by: {post.img_photographer}</span>
               <span className="credits">
-                <a href={post.portfolio_url}>{post.portfolio_url}</a>
+                Photo by:{" "}
+                <a href={post.portfolio_url}>{post.img_photographer}</a> on{" "}
+                <a href={"https://unsplash.com/"}>Unsplash</a>
               </span>
             </div>
           </div>
@@ -285,9 +286,6 @@ export default class Posts extends Component {
     return (
       <section className="postPage">
         <div className="landDiv postDiv">
-          <div className="unsplash">
-            <span>Photos powered by Unsplash</span>
-          </div>
           <div className="buttonDiv">
             {TokenService.getAuthToken() ? (
               <button className="whisperButton" onClick={this.handlePostClick}>

@@ -15,7 +15,7 @@ export default class Posts extends Component {
     error: null,
   };
 
-  //helpers
+  //Check likes for user
   checkUserLike = (postId) => {
     const liked = this.state.likedPosts;
     let result;
@@ -27,8 +27,11 @@ export default class Posts extends Component {
     return result;
   };
 
+  //Inital api calls (if logged in disable like button for posts liked by user, if logged out do not check)
   componentDidMount() {
     const jwt = TokenService.getAuthToken();
+
+    //Logged in
     if (jwt) {
       let base64Url = jwt.split(".")[1];
       let decodedValue = JSON.parse(window.atob(base64Url));
@@ -64,6 +67,8 @@ export default class Posts extends Component {
           )
         )
         .catch((res) => this.setState({ error: res.error.message }));
+
+      //Logged out
     } else {
       ContentApiService.getPosts()
         .then((posts) =>
@@ -79,17 +84,18 @@ export default class Posts extends Component {
                 img_dwn_link: post.img_dwn_link,
                 img_alt: post.img_alt,
                 dateCreated: post.date_created,
-                likedByUser: this.checkUserLike(post.id),
+                likedByUser: false,
               };
             }),
           })
         )
         .catch((res) => {
-          this.setState({ error: res.message });
+          this.setState({ error: res.error.message });
         });
     }
   }
 
+  //Open the for to make a whisper
   handlePostClick = (e) => {
     e.preventDefault();
     if (this.state.posting) {
@@ -102,6 +108,7 @@ export default class Posts extends Component {
     }
   };
 
+  //Cancel by closing the form and resetting the form
   handleCancelCLick = (e) => {
     e.preventDefault();
     document.getElementById("photoSearch").reset();
@@ -112,6 +119,7 @@ export default class Posts extends Component {
     });
   };
 
+  //Submit post to api
   handlePostSubmit = (e) => {
     e.preventDefault();
     const jwt = TokenService.getAuthToken();
@@ -153,6 +161,8 @@ export default class Posts extends Component {
             })
           )
         )
+
+        //Close and reset the form
         .then(() => {
           this.setState({ posting: false, unsplash: [] });
           document.getElementById("photoSearch").reset();
@@ -162,6 +172,7 @@ export default class Posts extends Component {
     }
   };
 
+  //Post a like to the api
   handlePostLike = (e) => {
     e.preventDefault();
     const jwt = TokenService.getAuthToken();
@@ -176,6 +187,7 @@ export default class Posts extends Component {
     }
   };
 
+  //Search unsplash for a background photo
   handlePhotoSearch = (e) => {
     e.preventDefault();
     const jwt = TokenService.getAuthToken();
@@ -202,6 +214,7 @@ export default class Posts extends Component {
     }
   };
 
+  //Unsplash Search Results
   renderPhotoList = () => {
     const photos = this.state.unsplash;
 
@@ -217,6 +230,7 @@ export default class Posts extends Component {
     );
   };
 
+  //Post list
   renderPostList = () => {
     const posts = this.state.posts;
 

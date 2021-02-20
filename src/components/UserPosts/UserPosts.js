@@ -10,6 +10,7 @@ export default class Posts extends Component {
     error: null,
   };
 
+  //GET posts users made and put them into state
   componentDidMount() {
     const jwt = TokenService.getAuthToken();
     if (jwt) {
@@ -38,6 +39,7 @@ export default class Posts extends Component {
     }
   }
 
+  //Display the list
   renderPostList = () => {
     const posts = this.state.posts;
 

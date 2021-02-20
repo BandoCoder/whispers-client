@@ -22,6 +22,7 @@ class LoginForm extends Component {
     this.setState({ password });
   }
 
+  //Submit
   handleSubmit = (ev) => {
     ev.preventDefault();
     const { user_name, password } = this.state;
@@ -44,10 +45,6 @@ class LoginForm extends Component {
         this.setState({ error: res.error.message });
       });
   };
-
-  componentDidMount() {
-    this.firstInput.current.focus();
-  }
 
   render() {
     const { error } = this.state;

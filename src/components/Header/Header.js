@@ -11,6 +11,7 @@ class Header extends Component {
     this.context.processLogout();
   };
 
+  //Logged in header
   renderLoggedIn() {
     return (
       <div>
@@ -33,6 +34,7 @@ class Header extends Component {
     );
   }
 
+  //Logged out header
   renderLoggedOut() {
     return (
       <nav>
@@ -56,7 +58,7 @@ class Header extends Component {
             </Link>
           </h1>
           <div className="navBar">
-            {TokenService.hasAuthToken()
+            {TokenService.hasAuthToken() //Check for auth token
               ? this.renderLoggedIn()
               : this.renderLoggedOut()}
           </div>

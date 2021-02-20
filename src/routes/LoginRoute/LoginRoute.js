@@ -10,6 +10,7 @@ class LoginRoute extends Component {
     },
   };
 
+  //On login push to main whisper page
   handleLoginSuccess = () => {
     const { location, history } = this.props;
     const destination = (location.state || {}).from || "/posts";

@@ -44,6 +44,7 @@ class SignupForm extends Component {
     }
   };
 
+  //Submit new user
   handleSubmit = (e) => {
     e.preventDefault();
     const { user_name, email, password, passwordRepeat } = this.state;

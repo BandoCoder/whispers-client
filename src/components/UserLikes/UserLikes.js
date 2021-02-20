@@ -10,6 +10,7 @@ export default class Likes extends Component {
     error: null,
   };
 
+  //GET posts liked by user and put them into state
   componentDidMount() {
     const jwt = TokenService.getAuthToken();
     if (jwt) {
@@ -38,6 +39,7 @@ export default class Likes extends Component {
     }
   }
 
+  //Display the list
   renderPostList = () => {
     const posts = this.state.posts;
 

@@ -15,9 +15,10 @@ import "./App.css";
 export default class App extends Component {
   state = { hasError: false };
 
+  //General error handling
   static getDerivedStateFromError(error) {
     console.error(error);
-    return { hasError: true };
+    return this.setState({ hasError: true });
   }
 
   render() {

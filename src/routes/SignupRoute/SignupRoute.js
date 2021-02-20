@@ -8,6 +8,7 @@ class SignupRoute extends Component {
     },
   };
 
+  //Push to the login page after signup
   handleRegistrationSuccess = () => {
     const { history } = this.props;
     history.push("/login");

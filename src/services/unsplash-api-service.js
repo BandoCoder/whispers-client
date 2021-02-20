@@ -1,5 +1,6 @@
 import config from "../config";
 
+// ** Calls an enpoint that passes the fetch call to the unsplash API (Proxy) **
 const UnsplashApiService = {
   searchPhotos(searchQuery) {
     return fetch(`${config.API_ENDPOINT}/photos?query=${searchQuery}`, {

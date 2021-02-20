@@ -19,12 +19,17 @@ This app allows you to post a secret (Whisper) for the public to view. Anyone ca
 
 There is no delete button, this is on purpose. Once you tell a secret, you cannot untell it.
 
+The next steps is to implement an admin account feature, that allows an admin (or moderator) to view reported posts and remove them as needed. The back end needs a table for this, then the front end needs logic to add a post to the table and hide it after a whisper has been reported 3 times.
+
+Also needs to display number of likes a post has recieved (not just a counter in the table, this needs to be returned by the database).
+
 ## Demo
 
 You can create your own account, or you can use this demo account:
 
-username: admin
-password: Password1!
+#### username: admin
+
+#### password: Password1!
 
 ## Instructions
 
@@ -55,3 +60,9 @@ Postgres
 REST
 
 Express
+
+Mocha
+
+Chai
+
+Fetch (for unsplash api)

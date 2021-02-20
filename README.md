@@ -10,8 +10,8 @@
 
 ## Screenshots
 
-![Desktop Screenshot](./src/img/whispersscreenshot1.png)
-![Mobile Screenshot](./src/img/whispersscreenshot2.png)
+![Desktop Screenshot](./src/img/whispersscreenshot1.PNG)
+![Mobile Screenshot](./src/img/whispersscreenshot2.PNG)
 
 ## Description
 

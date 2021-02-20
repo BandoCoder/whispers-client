@@ -10,7 +10,6 @@
 
 ## Screenshots
 
-src\img\whispersscreenshot1.PNG
 ![Desktop Screenshot](./src/img/whispersscreenshot1.png)
 ![Mobile Screenshot](./src/img/whispersscreenshot2.png)
 

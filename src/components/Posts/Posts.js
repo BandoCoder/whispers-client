@@ -324,6 +324,7 @@ export default class Posts extends Component {
                     className="textInput"
                     name="searchQuery"
                     placeolder="Search for Background"
+                    autoFocus
                   />
                   <button className="btn" type="submit">
                     Search

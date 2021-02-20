@@ -94,6 +94,7 @@ class SignupForm extends Component {
             placeholder="Enter username"
             aria-label="username"
             required
+            autoFocus
           />
         </div>
         <div className="enterEmail">

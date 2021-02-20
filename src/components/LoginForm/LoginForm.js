@@ -62,6 +62,7 @@ class LoginForm extends Component {
             placeholder="Username"
             aria-label="username"
             required
+            autoFocus
           />
         </div>
         <div className="loginPassword">

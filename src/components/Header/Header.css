@@ -2,6 +2,7 @@ header {
   margin: auto;
   background-image: url("./Secret.jpg");
   background-size: 100%;
+  z-index: 1;
 }
 
 .headLink {

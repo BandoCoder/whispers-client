@@ -154,11 +154,11 @@ export default class Posts extends Component {
           )
         )
         .then(() => {
+          this.setState({ posting: false, unsplash: [] });
           document.getElementById("photoSearch").reset();
           document.getElementById("post").reset();
-          this.setState({ posting: false, unsplash: [] });
         })
-        .catch((res) => this.setState({ error: res.error.message }));
+        .catch((res) => this.setState({ error: res.message }));
     }
   };
 
@@ -227,6 +227,8 @@ export default class Posts extends Component {
             style={{
               backgroundImage: `url(${post.img_url})`,
               backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
             className="postItem"
             key={idx}
@@ -253,6 +255,12 @@ export default class Posts extends Component {
                 )}
               </div>
             </div>
+            <div className="creditBox">
+              <span className="credits">Photo by: {post.img_photographer}</span>
+              <span className="credits">
+                <a href={post.portfolio_url}>{post.portfolio_url}</a>
+              </span>
+            </div>
           </div>
         ))}
       </>
@@ -263,6 +271,9 @@ export default class Posts extends Component {
     return (
       <section className="postPage">
         <div className="landDiv postDiv">
+          <div className="unsplash">
+            <span>Photos powered by Unsplash</span>
+          </div>
           <div className="buttonDiv">
             {TokenService.getAuthToken() ? (
               <button className="whisperButton" onClick={this.handlePostClick}>

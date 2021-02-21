@@ -139,6 +139,7 @@ export default class Posts extends Component {
         img_alt: selectedImage.alt_description,
         user_id: decodedValue.user_id,
       };
+      this.setState({ posting: false });
       ContentApiService.postWhisper(newPost, decodedValue.user_id)
         .then(() =>
           ContentApiService.getPosts().then((posts) =>
@@ -164,7 +165,7 @@ export default class Posts extends Component {
 
         //Close and reset the form
         .then(() => {
-          this.setState({ posting: false, unsplash: [] });
+          this.setState({ unsplash: [] });
           document.getElementById("photoSearch").reset();
           document.getElementById("post").reset();
         })

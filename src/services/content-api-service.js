@@ -55,6 +55,14 @@ const ContentApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json();
     });
   },
+  deletePost(post_id) {
+    return fetch(`${config.API_ENDPOINT}/posts/${post_id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${TokenService.getAuthToken()}`,
+      },
+    }).then((res) => (!res.ok ? res.json().then((e) => Promise.reject(e)) : 1));
+  },
 };
 
 export default ContentApiService;

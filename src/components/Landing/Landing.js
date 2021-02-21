@@ -10,10 +10,14 @@ export default class Landing extends Component {
         <div className="boxDiv landDiv">
           <h2>Welcome to Whispers</h2>
           <p>
-            Tell us something you have never told anyone before. It could be
-            anything, its all up to you. Post it here as a whisper, a secret
-            that your telling the community in confidence. You don't need to
-            silently carry these burdens, we are here for you.
+            Click the big round button that says "Begin" to see the whispers
+            that have been posted. You can then sign up for your own account or
+            use the username and password here in the git hub readme. Click the
+            button that says "Whisper Something" to make a post. Tell us
+            something you have never told anyone before. It could be anything,
+            its all up to you. Post it here as a whisper, a secret that your
+            telling the community in confidence. You don't need to silently
+            carry these burdens, we are here for you.
           </p>
           <h3>A few guidelines</h3>
           <ol>

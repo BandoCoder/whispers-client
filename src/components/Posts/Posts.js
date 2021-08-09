@@ -3,7 +3,19 @@ import moment from "moment";
 import ContentApiService from "../../services/content-api-service";
 import TokenService from "../../services/token-service";
 import UnsplashApiService from "../../services/unsplash-api-service";
+import { ScaleLoader } from "react-spinners";
+import { css } from "@emotion/react";
 import "./Posts.css";
+
+//Styles for loader
+const override = css`
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  margin: auto;
+  height: 300px;
+  padding-top: 100px;
+`;
 
 export default class Posts extends Component {
   state = {
@@ -13,6 +25,7 @@ export default class Posts extends Component {
     posting: false,
     loggedIn: false,
     error: null,
+    loading: true,
   };
 
   //Check likes for user
@@ -66,6 +79,7 @@ export default class Posts extends Component {
             })
           )
         )
+        .then(() => this.setState({ loading: false }))
         .catch((res) => this.setState({ error: res.error.message }));
 
       //Logged out
@@ -89,6 +103,7 @@ export default class Posts extends Component {
             }),
           })
         )
+        .then(() => this.setState({ loading: false }))
         .catch((res) => {
           this.setState({ error: res.error.message });
         });
@@ -284,6 +299,7 @@ export default class Posts extends Component {
   };
 
   render() {
+    const { loading } = this.state;
     return (
       <section className="postPage">
         <div className="landDiv postDiv">
@@ -359,6 +375,13 @@ export default class Posts extends Component {
           ) : (
             <></>
           )}
+          <ScaleLoader
+            className="postList"
+            loading={loading}
+            css={override}
+            size={70}
+            color="grey"
+          />
           <article className="postList">{this.renderPostList()}</article>
         </div>
       </section>

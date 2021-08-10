@@ -1,6 +1,6 @@
 .loginForm {
   width: 180px;
-  margin: auto;
+  margin: 10px auto;
 }
 
 .logField {
@@ -9,5 +9,11 @@
 
 .centerLoginBtn {
   width: 50px;
+  margin: 20px auto;
+}
+
+.alert {
+  font-size: 8px;
+  width: fit-content;
   margin: auto;
 }

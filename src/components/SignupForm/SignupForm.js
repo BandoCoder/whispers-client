@@ -1,7 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthApiService from "../../services/auth-api-service";
+import { ScaleLoader } from "react-spinners";
+import { css } from "@emotion/react";
 import "./SignupForm.css";
+
+//Styles for loader
+const override = css`
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  margin: auto;
+  height: 300px;
+  padding-top: 70px;
+`;
 
 class SignupForm extends Component {
   static defaultProps = {
@@ -15,6 +27,7 @@ class SignupForm extends Component {
     password: "",
     passwordRepeat: "",
     passwordAttempted: false,
+    loading: false,
   };
 
   // Handle State
@@ -49,7 +62,7 @@ class SignupForm extends Component {
     e.preventDefault();
     const { user_name, email, password, passwordRepeat } = this.state;
 
-    this.setState({ error: null });
+    this.setState({ error: null, loading: true });
     try {
       if (password !== passwordRepeat) {
         // eslint-disable-next-line no-throw-literal
@@ -71,16 +84,17 @@ class SignupForm extends Component {
           });
           this.props.onRegistrationSuccess();
         })
+        .then(() => this.setState({ loading: false }))
         .catch((res) => {
-          this.setState({ error: res.error });
+          this.setState({ error: res.error, loading: false });
         });
-    } catch (err) {
-      this.setState({ error: err });
+    } catch (res) {
+      this.setState({ error: res.error, loading: false });
     }
   };
 
   render() {
-    const { error } = this.state;
+    const { error, loading } = this.state;
     return (
       <form className="signupForm" onSubmit={this.handleSubmit}>
         <div role="alert">{error && <p>{error}</p>}</div>
@@ -136,14 +150,26 @@ class SignupForm extends Component {
             required
           />
         </div>
-        <button className="submit" type="submit">
-          Submit
-        </button>
-        <footer className="footer">
-          <Link className="loginLink" to="/login">
-            Already have an account?
-          </Link>
-        </footer>
+        {loading ? (
+          <ScaleLoader
+            className="postList"
+            loading={loading}
+            css={override}
+            size={70}
+            color="grey"
+          />
+        ) : (
+          <>
+            <button className="submit" type="submit">
+              Submit
+            </button>
+            <footer className="footer">
+              <Link className="loginLink" to="/login">
+                Already have an account?
+              </Link>
+            </footer>
+          </>
+        )}
       </form>
     );
   }

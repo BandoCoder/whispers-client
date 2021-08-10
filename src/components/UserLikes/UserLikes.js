@@ -2,12 +2,25 @@ import React, { Component } from "react";
 import ContentApiService from "../../services/content-api-service";
 import TokenService from "../../services/token-service";
 import moment from "moment";
+import { ScaleLoader } from "react-spinners";
+import { css } from "@emotion/react";
 import "./UserLikes.css";
+
+//Styles for loader
+const override = css`
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  margin: auto;
+  height: 300px;
+  padding-top: 70px;
+`;
 
 export default class Likes extends Component {
   state = {
     posts: [],
     error: null,
+    loading: true,
   };
 
   //GET posts liked by user and put them into state
@@ -20,22 +33,29 @@ export default class Likes extends Component {
       if (decodedValue.user_id !== this.props.match.params.user_id) {
         this.props.history.push(`/likes/${decodedValue.user_id}`);
       }
-      ContentApiService.getUserLikes(decodedValue.user_id).then((posts) =>
-        this.setState({
-          posts: posts.map((post) => {
-            return {
-              title: post.title,
-              content: post.content,
-              img_url: post.img_url,
-              img_photographer: post.img_photographer,
-              portfolio_url: post.portfolio_url,
-              img_dwn_link: post.img_dwn_link,
-              img_alt: post.img_alt,
-              dateCreated: post.date_created,
-            };
-          }),
+      ContentApiService.getUserLikes(decodedValue.user_id)
+        .then((posts) =>
+          this.setState({
+            posts: posts.map((post) => {
+              return {
+                title: post.title,
+                content: post.content,
+                img_url: post.img_url,
+                img_photographer: post.img_photographer,
+                portfolio_url: post.portfolio_url,
+                img_dwn_link: post.img_dwn_link,
+                img_alt: post.img_alt,
+                dateCreated: post.date_created,
+              };
+            }),
+          })
+        )
+        .then(() => {
+          this.setState({ loading: false });
         })
-      );
+        .catch((res) => {
+          this.setState({ error: res.error, loading: false });
+        });
     }
   }
 
@@ -76,10 +96,21 @@ export default class Likes extends Component {
     );
   };
   render() {
+    const { loading, error } = this.state;
     return (
       <section className="postPage">
         <h2 className="subHeads">Your Likes</h2>{" "}
+        <ScaleLoader
+          className="postList"
+          loading={loading}
+          css={override}
+          size={70}
+          color="grey"
+        />
         <article className="postList">{this.renderPostList()}</article>
+        <div role="alert">
+          <p>{error}</p>
+        </div>
       </section>
     );
   }

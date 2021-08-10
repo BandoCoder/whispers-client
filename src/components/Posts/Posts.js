@@ -14,7 +14,7 @@ const override = css`
   justify-content: center;
   margin: auto;
   height: 300px;
-  padding-top: 100px;
+  padding-top: 70px;
 `;
 
 export default class Posts extends Component {
@@ -26,6 +26,7 @@ export default class Posts extends Component {
     loggedIn: false,
     error: null,
     loading: true,
+    unsplashLoad: false,
   };
 
   //Check likes for user
@@ -80,7 +81,7 @@ export default class Posts extends Component {
           )
         )
         .then(() => this.setState({ loading: false }))
-        .catch((res) => this.setState({ error: res.error.message }));
+        .catch((res) => this.setState({ error: res.error, loading: false }));
 
       //Logged out
     } else {
@@ -105,7 +106,7 @@ export default class Posts extends Component {
         )
         .then(() => this.setState({ loading: false }))
         .catch((res) => {
-          this.setState({ error: res.error.message });
+          this.setState({ error: res.error, loading: false });
         });
     }
   }
@@ -137,6 +138,7 @@ export default class Posts extends Component {
   //Submit post to api
   handlePostSubmit = (e) => {
     e.preventDefault();
+    this.setState({ loading: true });
     const jwt = TokenService.getAuthToken();
     if (jwt) {
       let base64Url = jwt.split(".")[1];
@@ -157,25 +159,28 @@ export default class Posts extends Component {
       this.setState({ posting: false });
       ContentApiService.postWhisper(newPost, decodedValue.user_id)
         .then(() =>
-          ContentApiService.getPosts().then((posts) =>
-            this.setState({
-              posting: false,
-              posts: posts.map((post) => {
-                return {
-                  id: post.id,
-                  title: post.title,
-                  content: post.content,
-                  img_url: post.img_url,
-                  img_photographer: post.img_photographer,
-                  portfolio_url: post.portfolio_url,
-                  img_dwn_link: post.img_dwn_link,
-                  img_alt: post.img_alt,
-                  dateCreated: post.date_created,
-                  likedByUser: this.checkUserLike(post.id),
-                };
-              }),
-            })
-          )
+          ContentApiService.getPosts()
+            .then((posts) =>
+              this.setState({
+                posting: false,
+                posts: posts.map((post) => {
+                  return {
+                    id: post.id,
+                    title: post.title,
+                    content: post.content,
+                    img_url: post.img_url,
+                    img_photographer: post.img_photographer,
+                    portfolio_url: post.portfolio_url,
+                    img_dwn_link: post.img_dwn_link,
+                    img_alt: post.img_alt,
+                    dateCreated: post.date_created,
+                    likedByUser: this.checkUserLike(post.id),
+                  };
+                }),
+              })
+            )
+            .then(() => this.setState({ loading: false }))
+            .catch((res) => this.setState({ error: res.error, loading: false }))
         )
 
         //Close and reset the form
@@ -206,6 +211,7 @@ export default class Posts extends Component {
   //Search unsplash for a background photo
   handlePhotoSearch = (e) => {
     e.preventDefault();
+    this.setState({ unsplashLoad: true });
     const jwt = TokenService.getAuthToken();
     const searchQuery = e.target["searchQuery"].value;
     if (jwt) {
@@ -224,6 +230,7 @@ export default class Posts extends Component {
             }),
           })
         )
+        .then(() => this.setState({ unsplashLoad: false }))
         .catch((res) => {
           this.setState({ error: res.error.message });
         });
@@ -232,11 +239,12 @@ export default class Posts extends Component {
 
   //Unsplash Search Results
   renderPhotoList = () => {
-    const photos = this.state.unsplash;
+    const { unsplash } = this.state;
 
     return (
       <div className="photoChoice">
-        {photos.map((photo, idx) => (
+        {" "}
+        {unsplash.map((photo, idx) => (
           <label className="photoThumb" key={idx}>
             <input type="radio" id={idx} name="photoThumb" value={photo.id} />
             <img src={photo.urls.thumb} alt={photo.alt_description} />
@@ -299,7 +307,7 @@ export default class Posts extends Component {
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, unsplashLoad } = this.state;
     return (
       <section className="postPage">
         <div className="landDiv postDiv">
@@ -341,9 +349,19 @@ export default class Posts extends Component {
                     placeolder="Search for Background"
                     autoFocus
                   />
-                  <button className="btn" type="submit">
-                    Search
-                  </button>
+                  {unsplashLoad ? (
+                    <ScaleLoader
+                      className="postList"
+                      loading={unsplashLoad}
+                      css={override}
+                      size={70}
+                      color="grey"
+                    />
+                  ) : (
+                    <button className="btn" type="submit">
+                      Search
+                    </button>
+                  )}
                 </form>
                 <form
                   className="post"
